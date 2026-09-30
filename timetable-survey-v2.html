@@ -275,7 +275,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     }
     card.appendChild(hg);
     var tools=el('div','dayTools');
-    var gb=el('button','','이 요일 빈 칸 회색으로');gb.type='button';gb.dataset.fill=d;tools.appendChild(gb);
+    var gb=el('button','','종일 불가능합니다.');gb.type='button';gb.dataset.fill=d;tools.appendChild(gb);
     card.appendChild(tools);
     var sm=el('div','sum');sm.setAttribute('aria-live','polite');sums[d]=sm;card.appendChild(sm);
     var lab=el('label','f');lab.setAttribute('for','memo-'+dd[0]);
@@ -362,7 +362,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
   });
   function fillDay(d){
     pushHist();
-    for(var i=0;i<N;i++){if(state.days[keyOf(d)][i]===0)setV(d,i,3)}
+    for(var i=0;i<N;i++)setV(d,i,3);
     refresh();saveDraft();
   }
 
