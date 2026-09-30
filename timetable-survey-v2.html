@@ -280,7 +280,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     var sm=el('div','sum');sm.setAttribute('aria-live','polite');sums[d]=sm;card.appendChild(sm);
     var lab=el('label','f');lab.setAttribute('for','memo-'+dd[0]);
     lab.appendChild(document.createTextNode(dd[1]+'요일 참고사항'));
-    lab.appendChild(el('span','hint','(필수는 아니지만, 자세히 적어주시면 유리합니다. )'));
+    lab.appendChild(el('span','hint','(자세히 적어주시면 유리합니다. )'));
     var ta=el('textarea','dm');ta.id='memo-'+dd[0];ta.maxLength=500;memos[d]=ta;
     ta.addEventListener('input',function(){saveDraft()});
     if(d===0){var ex=el('div','soft pre','참고사항 작성 예)\n예) 뒤에 학원이 있어 5:00 바로 셔틀타러 출발 등\n5:05마침은 힘듭니다.\n\n(이런 내용을 넘기시면, 전화로 일일이 확인해야하는 번거로움이 있답니다 🙂)');ex.id='memoEx';lab.appendChild(ex)}
