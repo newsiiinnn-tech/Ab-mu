@@ -55,11 +55,15 @@ button:disabled{opacity:.55;cursor:default}
 .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 
 /* worked example bar */
-.ex{display:flex;flex-direction:column;gap:6px}
-.exbar{display:flex;height:26px;border-radius:7px;overflow:hidden;border:1px solid var(--line-strong)}
+.ex{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.ex p{flex:1 1 200px;min-width:0}
+.exv{position:relative;display:flex;gap:8px;height:280px;margin-block:10px}
+.exbar{display:flex;flex-direction:column;width:44px;border-radius:7px;overflow:hidden;border:1px solid var(--line-strong)}
 .exbar i{display:block}
-.exlab{display:flex;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
-.exlab span{display:block;text-align:left}
+.exlab{position:relative;width:92px;font-size:13px;color:var(--fg);font-variant-numeric:tabular-nums}
+.exlab span{position:absolute;left:0;transform:translateY(-50%);white-space:nowrap;line-height:1}
+.exlab span.first{transform:none}
+.exlab span.last{transform:translateY(-100%)}
 
 /* sticky brush bar */
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:8px;display:flex;flex-direction:column;gap:6px;box-shadow:0 2px 10px rgba(30,10,70,.10)}
@@ -68,19 +72,20 @@ button:disabled{opacity:.55;cursor:default}
 .brush b{display:block;width:100%;height:14px;border-radius:5px;border:1px solid var(--line-strong)}
 .brush[aria-pressed="true"]{border:2px solid var(--accent);background:var(--bg);font-weight:700}
 .sw-avail{background:var(--avail)} .sw-pref{background:var(--pref)} .sw-no{background:var(--no)} .sw-erase{background:var(--blank)}
-.status{display:flex;justify-content:space-between;gap:8px;font-size:13px;flex-wrap:wrap}
+.status{display:flex;justify-content:space-between;align-items:center;gap:4px 8px;font-size:13px;flex-wrap:wrap}
 .chip{border-radius:999px;padding:1px 10px;font-weight:700;background:var(--warn-bg);color:var(--warn)}
 .chip.ok{background:var(--ok-bg);color:var(--ok)}
-#readout{color:var(--muted);font-variant-numeric:tabular-nums}
+#readout{color:var(--accent);font-weight:700;font-size:20px;line-height:1.3;font-variant-numeric:tabular-nums;margin-left:auto;text-align:right}
 
 /* the grid */
 .gridscroll{overflow-x:auto}
-.grid{display:grid;grid-template-columns:46px repeat(7,minmax(38px,1fr));min-width:340px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
+.grid{display:grid;grid-template-columns:52px repeat(7,minmax(38px,1fr));min-width:340px;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none}
 .dh{position:sticky;top:0;text-align:center;font-weight:700;padding:6px 0;border-bottom:1px solid var(--line-strong);background:var(--surface);cursor:pointer;font-size:14px}
 .dh small{display:block;font-weight:400;color:var(--muted);font-size:10.5px;line-height:1.1}
 .g{height:12px;position:relative;font-variant-numeric:tabular-nums}
 .g.time{font-size:11px;color:var(--muted);text-align:right;padding-right:6px}
-.g.time span{position:absolute;right:6px;top:-8px}
+.g.time span{position:absolute;right:6px;top:-7px;font-size:11px}
+.g.time span.hr{font-size:13px;font-weight:700;color:var(--fg);top:-8px}
 .cell{touch-action:none;border-left:1px solid var(--line);background:var(--blank);cursor:crosshair}
 .cell.h{border-top:1px solid var(--line-strong)}
 .cell.q{border-top:1px dashed var(--line)}
@@ -155,11 +160,17 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
 
     <div class="ex" aria-label="작성 예시">
       <p class="soft">예) 월 3:35 ~ 5:00 이 가능하다면, 손가락으로 드래그해서 흐린 보라로 칠하고, 그중 4:00~5:00이 가장 선호라면 진한 보라로 다시 칠합니다. 나머지 시간은 회색입니다.</p>
-      <div class="exbar" role="img" aria-label="12:00부터 3:35까지 회색, 3:35부터 4:00까지 흐린 보라, 4:00부터 5:00까지 진한 보라, 5:00부터 7:00까지 회색">
-        <i class="sw-no" style="flex:215"></i><i class="sw-avail" style="flex:25"></i><i class="sw-pref" style="flex:60"></i><i class="sw-no" style="flex:120"></i>
-      </div>
-      <div class="exlab" aria-hidden="true">
-        <span style="flex:215">12:00</span><span style="flex:25">3:35</span><span style="flex:60">4:00</span><span style="flex:120;text-align:right">5:00 ~ 7:00</span>
+      <div class="exv" role="img" aria-label="위에서 아래로 12:00부터 3:35까지 회색, 3:35부터 4:00까지 흐린 보라, 4:00부터 5:00까지 진한 보라, 5:00부터 7:00까지 회색">
+        <div class="exbar" aria-hidden="true">
+          <i class="sw-no" style="flex:215"></i><i class="sw-avail" style="flex:25"></i><i class="sw-pref" style="flex:60"></i><i class="sw-no" style="flex:120"></i>
+        </div>
+        <div class="exlab" aria-hidden="true">
+          <span class="first" style="top:0">12:00</span>
+          <span style="top:51.19%">3:35 시작</span>
+          <span style="top:57.14%">4:00 선호 시작</span>
+          <span style="top:71.43%">5:00 끝</span>
+          <span class="last" style="top:100%">7:00</span>
+        </div>
       </div>
     </div>
 
@@ -262,15 +273,15 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     for(var d=0;d<7;d++)cells[d]=[];
     for(var i=0;i<N;i++){
       var g=cell('g time');
-      if(i%12===0){var s=document.createElement('span');s.textContent=fmt(i);g.appendChild(s)}
+      if(i%3===0){var s=document.createElement('span');s.textContent=fmt(i);if(i%12===0)s.className='hr';g.appendChild(s)}
       grid.appendChild(g);
       for(var d2=0;d2<7;d2++){
-        var c=cell('g cell'+(i%12===0?' h':(i%6===0?' q':'')));
+        var c=cell('g cell'+(i%12===0?' h':(i%3===0?' q':'')));
         c.dataset.d=d2;c.dataset.i=i;c.dataset.v=0;
         cells[d2][i]=c;grid.appendChild(c);
       }
     }
-    var f=cell('g time');var fs=document.createElement('span');fs.textContent=fmt(N);f.appendChild(fs);grid.appendChild(f);
+    var f=cell('g time');var fs=document.createElement('span');fs.className='hr';fs.textContent=fmt(N);f.appendChild(fs);grid.appendChild(f);
     for(var d3=0;d3<7;d3++)grid.appendChild(cell('g cell end'));
   })();
 
