@@ -99,7 +99,9 @@ button:disabled{opacity:.55;cursor:default}
 .srow b{font-weight:700}
 .srow .vals{font-variant-numeric:tabular-nums;min-width:0}
 .srow .vals{display:flex;flex-wrap:wrap;gap:6px}
-.srow .vals div{white-space:nowrap;font-size:13.5px;padding:2px 10px;border-radius:999px;border:1px solid var(--line-strong);font-weight:700;background:var(--blank);color:var(--fg)}
+.srow .vals div{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px;max-width:100%;font-size:13.5px;padding:3px 12px;border-radius:16px;border:1px solid var(--line-strong);font-weight:700;background:var(--blank);color:var(--fg)}
+.srow .tm,.srow .du{white-space:nowrap}
+.srow .du{font-weight:400;font-size:12.5px;opacity:.9}
 .srow .vals.c2 div{background:var(--pref);border-color:var(--pref);color:var(--accent-fg)}
 .srow .vals.c1 div{background:var(--avail);border-color:var(--avail);color:var(--fg)}
 .srow .vals.c3 div{background:var(--no);border-color:var(--no);color:var(--fg)}
@@ -318,7 +320,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       row.appendChild(el('b','',sr[1]));
       var v=el('div','vals c'+sr[0]);
       if(!rs.length){v.className='vals none';v.style.display='block';v.textContent='없음'}
-      else rs.forEach(function(r){v.appendChild(el('div','',fmt(r[0])+' ~ '+fmt(r[1]+1)+' ('+dur(r[1]-r[0]+1)+')'))});
+      else rs.forEach(function(r){var c=el('div','');c.appendChild(el('span','tm',fmt(r[0])+' ~ '+fmt(r[1]+1)));c.appendChild(el('span','du','('+dur(r[1]-r[0]+1)+')'));v.appendChild(c)});
       row.appendChild(v);box.appendChild(row);
     });
   }
