@@ -98,7 +98,11 @@ button:disabled{opacity:.55;cursor:default}
 .srow .dot{width:16px;height:16px;border-radius:5px;border:1px solid var(--line-strong);margin-top:3px}
 .srow b{font-weight:700}
 .srow .vals{font-variant-numeric:tabular-nums;min-width:0}
-.srow .vals div{margin-bottom:2px}
+.srow .vals{display:flex;flex-wrap:wrap;gap:6px}
+.srow .vals div{white-space:nowrap;font-size:13.5px;padding:2px 10px;border-radius:999px;border:1px solid var(--line-strong);font-weight:700;background:var(--blank);color:var(--fg)}
+.srow .vals.c2 div{background:var(--pref);border-color:var(--pref);color:var(--accent-fg)}
+.srow .vals.c1 div{background:var(--avail);border-color:var(--avail);color:var(--fg)}
+.srow .vals.c3 div{background:var(--no);border-color:var(--no);color:var(--fg)}
 .srow .none{color:var(--muted)}
 .dayHead{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .dayHead{flex-wrap:wrap}
@@ -312,8 +316,8 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       var row=el('div','srow');
       row.appendChild(el('span','dot '+sr[2]));
       row.appendChild(el('b','',sr[1]));
-      var v=el('div','vals');
-      if(!rs.length){v.className='vals none';v.textContent='없음'}
+      var v=el('div','vals c'+sr[0]);
+      if(!rs.length){v.className='vals none';v.style.display='block';v.textContent='없음'}
       else rs.forEach(function(r){v.appendChild(el('div','',fmt(r[0])+' ~ '+fmt(r[1]+1)+' ('+dur(r[1]-r[0]+1)+')'))});
       row.appendChild(v);box.appendChild(row);
     });
