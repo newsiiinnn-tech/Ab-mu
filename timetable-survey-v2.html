@@ -183,11 +183,6 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       <button type="button" id="clearAll">전체 지우기</button>
     </div>
 
-    <div class="soft pre" id="memoEx">참고사항 작성 예)
-예) 뒤에 학원이 있어 5:00 바로 셔틀타러 출발 등
-5:05마침은 힘듭니다.
-
-(이런 내용을 넘기시면, 전화로 일일이 확인해야하는 번거로움이 있답니다 :)</div>
   </section>
 
   <div class="daysWrap" id="daysWrap">
@@ -288,6 +283,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     var ta=el('textarea','dm');ta.id='memo-'+dd[0];ta.maxLength=500;memos[d]=ta;
     ta.addEventListener('input',function(){saveDraft()});
     lab.appendChild(ta);card.appendChild(lab);
+    if(d===0){var ex=el('div','soft pre','참고사항 작성 예)\n예) 뒤에 학원이 있어 5:00 바로 셔틀타러 출발 등\n5:05마침은 힘듭니다.\n\n(이런 내용을 넘기시면, 전화로 일일이 확인해야하는 번거로움이 있답니다 :)');ex.id='memoEx';card.appendChild(ex)}
     wrap.appendChild(card);
   });
 
