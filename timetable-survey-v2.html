@@ -265,7 +265,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     var card=el('section','card day');cardEls[d]=card;
     var head=el('div','dayHead');head.appendChild(el('h3','',dd[1]+'요일'));
     var btns=el('div','dayBtns');
-    var cb=el('button','','전체 지우고 다시');cb.type='button';cb.dataset.clear=d;btns.appendChild(cb);
+    var cb=el('button','','🧽 전체 지우고 다시');cb.type='button';cb.dataset.clear=d;btns.appendChild(cb);
     var gb=el('button','','❌ 종일 불가 시 클릭');gb.type='button';gb.dataset.fill=d;btns.appendChild(gb);
     head.appendChild(btns);
     card.appendChild(head);
