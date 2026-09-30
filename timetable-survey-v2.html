@@ -101,6 +101,8 @@ button:disabled{opacity:.55;cursor:default}
 .srow .vals div{margin-bottom:2px}
 .srow .none{color:var(--muted)}
 .dayHead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dayHead{flex-wrap:wrap}
+.dayBtns{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
 .dayHead button{min-height:34px;padding:5px 10px;font-size:13px}
 textarea.dm{min-height:76px}
 
@@ -262,7 +264,10 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     cells[d]=[];
     var card=el('section','card day');cardEls[d]=card;
     var head=el('div','dayHead');head.appendChild(el('h3','',dd[1]+'요일'));
-    var gb=el('button','','❌ 종일 불가 시 클릭');gb.type='button';gb.dataset.fill=d;head.appendChild(gb);
+    var btns=el('div','dayBtns');
+    var cb=el('button','','전체 지우고 다시');cb.type='button';cb.dataset.clear=d;btns.appendChild(cb);
+    var gb=el('button','','❌ 종일 불가 시 클릭');gb.type='button';gb.dataset.fill=d;btns.appendChild(gb);
+    head.appendChild(btns);
     card.appendChild(head);
     var hg=el('div','hgrid');hg.setAttribute('aria-label',dd[1]+'요일 시간표, 한 줄 1시간, 한 칸 5분');
     for(var r=0;r<7;r++){
@@ -358,8 +363,14 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
   wrap.addEventListener('pointerup',endPaint);
   wrap.addEventListener('pointercancel',endPaint);
   wrap.addEventListener('click',function(e){
-    var b=e.target.closest&&e.target.closest('button[data-fill]');if(b)fillDay(+b.dataset.fill);
+    var b=e.target.closest&&e.target.closest('button[data-fill]');if(b){fillDay(+b.dataset.fill);return}
+    var c=e.target.closest&&e.target.closest('button[data-clear]');if(c)clearDay(+c.dataset.clear);
   });
+  function clearDay(d){
+    pushHist();
+    for(var i=0;i<N;i++)setV(d,i,0);
+    refresh();saveDraft();
+  }
   function fillDay(d){
     pushHist();
     for(var i=0;i<N;i++)setV(d,i,3);
