@@ -99,8 +99,8 @@ button:disabled{opacity:.55;cursor:default}
 .srow .vals{font-variant-numeric:tabular-nums;min-width:0}
 .srow .vals div{margin-bottom:2px}
 .srow .none{color:var(--muted)}
-.dayTools{display:flex;justify-content:flex-end}
-.dayTools button{min-height:34px;padding:5px 10px;font-size:13px}
+.dayHead{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.dayHead button{min-height:34px;padding:5px 10px;font-size:13px}
 textarea.dm{min-height:76px}
 
 .msg{border-radius:10px;padding:10px 12px;font-size:14px}
@@ -260,7 +260,9 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
   DAYS.forEach(function(dd,d){
     cells[d]=[];
     var card=el('section','card day');
-    card.appendChild(el('h3','',dd[1]+'요일'));
+    var head=el('div','dayHead');head.appendChild(el('h3','',dd[1]+'요일'));
+    var gb=el('button','','종일 불가능합니다.');gb.type='button';gb.dataset.fill=d;head.appendChild(gb);
+    card.appendChild(head);
     var hg=el('div','hgrid');hg.setAttribute('aria-label',dd[1]+'요일 시간표, 한 줄 1시간, 한 칸 5분');
     for(var r=0;r<7;r++){
       var row=el('div','hrow');
@@ -274,9 +276,6 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       hg.appendChild(row);
     }
     card.appendChild(hg);
-    var tools=el('div','dayTools');
-    var gb=el('button','','종일 불가능합니다.');gb.type='button';gb.dataset.fill=d;tools.appendChild(gb);
-    card.appendChild(tools);
     var sm=el('div','sum');sm.setAttribute('aria-live','polite');sums[d]=sm;card.appendChild(sm);
     var lab=el('label','f');lab.setAttribute('for','memo-'+dd[0]);
     lab.appendChild(document.createTextNode(dd[1]+'요일 참고사항'));
