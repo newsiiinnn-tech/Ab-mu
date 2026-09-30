@@ -510,7 +510,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       if(n>0){miss.push(dd[1]+'요일('+dur(n)+')');if(first<0)first=d}
     });
     if(miss.length){
-      return '색칠하지 않은 칸이 있어 제출할 수 없어요: '+miss.join(', ')+'. 빈 칸마다 가능, 가장 선호, 불가능 중 하나로 칠해 주세요. 나머지가 모두 불가능이면 "종일 불가능합니다." 또는 위의 "모든 요일 빈 칸 회색으로"를 누르면 돼요.';
+      return '색칠하지 않은 칸이 있어 제출할 수 없어요: '+miss.join(', ')+'. 빈 칸마다 가능, 가장 선호, 불가능 중 하나로 칠해 주세요. 나머지가 모두 불가능이면 "❌ 종일 불가 시 클릭" 또는 위의 "모든 요일 빈 칸 회색으로"를 누르면 돼요.';
     }
     if(blockCount(state.days)===0)return '가능한 시간을 한 곳 이상 칠해 주세요.';
     return '';
