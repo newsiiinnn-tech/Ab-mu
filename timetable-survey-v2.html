@@ -92,6 +92,7 @@ button:disabled{opacity:.55;cursor:default}
 .cell[data-v="2"]{background:var(--pref)}
 .cell[data-v="3"]{background:var(--no)}
 .cell[data-v="2"] .tk{color:var(--accent-fg)}
+.card.day.incomplete{border-color:var(--bad);box-shadow:0 0 0 2px var(--bad)}
 .sum{display:flex;flex-direction:column;gap:6px;background:var(--bg);border-radius:10px;padding:10px 12px}
 .srow{display:grid;grid-template-columns:18px 76px 1fr;gap:8px;align-items:start;font-size:14px}
 .srow .dot{width:16px;height:16px;border-radius:5px;border:1px solid var(--line-strong);margin-top:3px}
@@ -255,11 +256,11 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
 
   /* ---------- day graphs ---------- */
   var wrap=$('daysWrap');
-  var sums=[], memos=[];
+  var sums=[], memos=[], cardEls=[];
   function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e}
   DAYS.forEach(function(dd,d){
     cells[d]=[];
-    var card=el('section','card day');
+    var card=el('section','card day');cardEls[d]=card;
     var head=el('div','dayHead');head.appendChild(el('h3','',dd[1]+'요일'));
     var gb=el('button','','종일 불가능합니다.');gb.type='button';gb.dataset.fill=d;head.appendChild(gb);
     card.appendChild(head);
@@ -313,7 +314,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     });
   }
   function refresh(){
-    for(var d=0;d<7;d++)renderSum(d);
+    for(var d=0;d<7;d++){renderSum(d);if(cardEls[d]&&state.days[keyOf(d)].indexOf(0)<0)cardEls[d].classList.remove('incomplete')}
     var k=blockCount(state.days),n=need(),el=$('counter');
     if(n){el.textContent='가능한 시간대 '+k+'개 / 필요 '+n+'개 이상';el.className='chip'+(k>=n?' ok':'')}
     else{el.textContent='가능한 시간대 '+k+'개';el.className='chip'}
@@ -502,6 +503,15 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
     if(!s.freq){$('freq1').focus();return '횟수를 선택해 주세요.'}
     if(!s.cert){$('cert1').focus();return '확실성 여부를 선택해 주세요.'}
     if(!contactKey(s.contact)){$('contact').focus();return '연락처를 확인해 주세요. 전화번호(숫자 9~12자리) 또는 이메일 형식이어야 합니다.'}
+    var miss=[],first=-1;
+    DAYS.forEach(function(dd,d){
+      var n=state.days[dd[0]].filter(function(v){return v===0}).length;
+      cardEls[d].classList.toggle('incomplete',n>0);
+      if(n>0){miss.push(dd[1]+'요일('+dur(n)+')');if(first<0)first=d}
+    });
+    if(miss.length){
+      return '색칠하지 않은 칸이 있어 제출할 수 없어요: '+miss.join(', ')+'. 빈 칸마다 가능, 가장 선호, 불가능 중 하나로 칠해 주세요. 나머지가 모두 불가능이면 "종일 불가능합니다." 또는 위의 "모든 요일 빈 칸 회색으로"를 누르면 돼요.';
+    }
     if(blockCount(state.days)===0)return '가능한 시간을 한 곳 이상 칠해 주세요.';
     return '';
   }
