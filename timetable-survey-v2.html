@@ -7,7 +7,7 @@
 :root{
   --bg:#f6f4fb; --surface:#ffffff; --fg:#241d36; --muted:#6c6483; --line:#e3deef; --line-strong:#bdb3d6;
   --accent:#5b34c4; --accent-fg:#ffffff;
-  --avail:#cfc0f5; --pref:#5b34c4; --no:#c9c8d0; --blank:#ffffff;
+  --avail:#cfc0f5; --pref:#5b34c4; --no:#c9c8d0; --blank:#ffffff; --half:#6f6b7d;
   --warn:#a35b00; --warn-bg:#fff2dc; --ok:#1d6b3c; --ok-bg:#e2f5e8; --bad:#b3261e;
   --f-display:"Jua","Noto Sans KR",system-ui,sans-serif;
   --f-body:"Noto Sans KR",system-ui,-apple-system,"Apple SD Gothic Neo","Malgun Gothic",sans-serif;
@@ -15,12 +15,12 @@
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
   --bg:#17121f; --surface:#221b30; --fg:#efeaf9; --muted:#a79dbf; --line:#3a304d; --line-strong:#5b4d78;
   --accent:#a78bfa; --accent-fg:#1a1030;
-  --avail:#5a4a8f; --pref:#a78bfa; --no:#4a4657; --blank:#221b30;
+  --avail:#5a4a8f; --pref:#a78bfa; --no:#4a4657; --blank:#221b30; --half:#9a94b0;
   --warn:#ffcf8a; --warn-bg:#3d2c10; --ok:#8be0ab; --ok-bg:#12321f; --bad:#ff8a80; color-scheme:dark}}
 :root[data-theme="dark"]{
   --bg:#17121f; --surface:#221b30; --fg:#efeaf9; --muted:#a79dbf; --line:#3a304d; --line-strong:#5b4d78;
   --accent:#a78bfa; --accent-fg:#1a1030;
-  --avail:#5a4a8f; --pref:#a78bfa; --no:#4a4657; --blank:#221b30;
+  --avail:#5a4a8f; --pref:#a78bfa; --no:#4a4657; --blank:#221b30; --half:#9a94b0;
   --warn:#ffcf8a; --warn-bg:#3d2c10; --ok:#8be0ab; --ok-bg:#12321f; --bad:#ff8a80; color-scheme:dark}
 
 body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:15px;line-height:1.6}
@@ -85,6 +85,7 @@ button:disabled{opacity:.55;cursor:default}
 .hl{font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-variant-numeric:tabular-nums}
 .cell{position:relative;touch-action:none;border-left:1px solid var(--line);border-top:1px solid var(--line);background:var(--blank);cursor:crosshair}
 .cell.q{border-left:1px solid var(--line-strong)}
+.cell.half{border-left:2px solid var(--half)}
 .hrow:last-child .cell{border-bottom:1px solid var(--line)}
 .cell .tk{position:absolute;left:2px;top:1px;font-size:9.5px;line-height:1;color:var(--muted);pointer-events:none}
 .cell[data-v="1"]{background:var(--avail)}
@@ -265,7 +266,7 @@ details.sub{border-top:1px solid var(--line);padding-top:8px;margin-top:8px}
       var row=el('div','hrow');
       row.appendChild(el('div','hl',fmt(r*12)));
       for(var k=0;k<12;k++){
-        var i=r*12+k,c=el('div','cell'+(k%3===0?' q':''));
+        var i=r*12+k,c=el('div','cell'+(k%3===0?' q':'')+(k===6?' half':''));
         c.dataset.d=d;c.dataset.i=i;c.dataset.v=0;
         if(k>0&&k%3===0)c.appendChild(el('span','tk',':'+(k*5<10?'0':'')+(k*5)));
         cells[d][i]=c;row.appendChild(c);
